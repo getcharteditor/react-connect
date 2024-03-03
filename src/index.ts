@@ -77,10 +77,10 @@ const constructAuthUrl = ({
   const canUseChartDevMode = chartDevMode && window.location.hostname === 'localhost';
 
   const authUrl = new URL(
-    `${canUseChartDevMode ? DEV_CHART_CONNECT_URI : BASE_CHART_CONNECT_URI}/authorize`
+    `${canUseChartDevMode ? DEV_CHART_CONNECT_URI : BASE_CHART_CONNECT_URI}`
   );
   if (clientId) authUrl.searchParams.append('client_id', clientId);
-  if (taxProvider) authUrl.searchParams.append('payroll_provider', taxProvider);
+  if (taxProvider) authUrl.searchParams.append('tax_provider', taxProvider);
   if (category) authUrl.searchParams.append('category', category);
   authUrl.searchParams.append('products', (products ?? []).join(' '));
   authUrl.searchParams.append('app_type', 'spa');
@@ -90,7 +90,6 @@ const constructAuthUrl = ({
   );
   /** The host URL of the SDK. This is used to store the referrer for postMessage purposes */
   authUrl.searchParams.append('sdk_host_url', window.location.origin);
-  authUrl.searchParams.append('mode', 'employer');
   if (manual) authUrl.searchParams.append('manual', String(manual));
   if (sandbox) authUrl.searchParams.append('sandbox', String(sandbox));
   if (state) authUrl.searchParams.append('state', state);
@@ -153,7 +152,7 @@ export const useChartConnect = (options: Partial<ConnectOptions>): { open: OpenF
     if (!document.getElementById(CHART_CONNECT_IFRAME_ID)) {
       const iframe = document.createElement('iframe');
       iframe.src = constructAuthUrl(openOptions);
-      iframe.frameBorder = '0';
+      iframe.frameBorder = '0'; // Probably not needed as style.border = none does the job.
       iframe.id = CHART_CONNECT_IFRAME_ID;
       iframe.style.position = 'fixed';
       iframe.style.zIndex = openOptions.zIndex.toString();
