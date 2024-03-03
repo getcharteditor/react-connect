@@ -1,4 +1,4 @@
-import { SuccessEvent, ErrorEvent } from '@tryfinch/react-connect';
+import { SuccessEvent, ErrorEvent } from '@trychart/react-connect';
 
 export type ResultContainer = {
   kind: 'success';

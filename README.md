@@ -1,33 +1,31 @@
-# @tryfinch/react-connect
+# @trychart/react-connect
 
-[![NPM](https://img.shields.io/npm/v/@tryfinch/react-connect)](https://www.npmjs.com/package/@tryfinch/react-connect)
+[![NPM](https://img.shields.io/npm/v/@trychart/react-connect)](https://www.npmjs.com/package/@trychart/react-connect)
 
 ## Install
 
 ```bash
-npm install --save @tryfinch/react-connect
+npm install --save @trychart/react-connect
 ```
 
 ## Usage
 
 ```jsx
 import React, { useState } from 'react';
-import { useFinchConnect } from '@tryfinch/react-connect';
+import { useChartConnect } from '@trychart/react-connect';
 
 const App = () => {
   const [code, setCode] = useState(null);
 
   const onSuccess = ({ code }) => setCode(code);
   const onError = ({ errorMessage }) => console.error(errorMessage);
-  const onClose = () => console.log('User exited Finch Connect');
+  const onClose = () => console.log('User exited Chart Connect');
 
-  const { open } = useFinchConnect({
+  const { open } = useChartConnect({
     clientId: '<your-client-id>',
-    // The below are only a few of Finch's product scopes, please check Finch's [documentation](https://developer.tryfinch.com/docs/reference/ZG9jOjMxOTg1NTI3-permissions) for the full list
-    products: ['company', 'directory'],
-    // Check Finch's [documentation](https://developer.tryfinch.com/docs/reference/96f5be9e0ec1a-providers) for the full list of payroll provider IDs
+    // Check Chart's [documentation](https://developer.trychartapi.com/docs/reference/96f5be9e0ec1a-providers) for the full list of payroll provider IDs
     // payrollProvider: '<payroll-provider-id>',
-    // For `sandbox`, omit or use 'false' if in production. Use "finch" or "provider" for sandbox testing, depending on test plan. See Finch's [documentation](https://developer.tryfinch.com/implementation-guide/Test/Testing-Plan) for an overview of Finch and Provider sandboxes.
+    // For `sandbox`, omit or use 'false' if in production. Use "chart" or "provider" for sandbox testing, depending on test plan. See Chart's [documentation](https://developer.trychartapi.com/implementation-guide/Test/Testing-Plan) for an overview of Chart and Provider sandboxes.
     // sandbox: false,
     // manual: false,
     // zIndex: 999,
@@ -41,7 +39,7 @@ const App = () => {
       <header>
         <p>Code: {code}</p>
         <button type="button" onClick={() => open()}>
-          Open Finch Connect
+          Open Chart Connect
         </button>
       </header>
     </div>

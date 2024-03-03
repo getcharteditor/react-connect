@@ -10,7 +10,7 @@ export type ErrorEvent = {
 };
 
 export type Sandbox =
-  | 'finch' /** This is to enable the new Finch (simulated) Sandbox */
+  | 'chart' /** This is to enable the new Chart (simulated) Sandbox */
   | 'provider' /** This is to enable the new Provider Sandbox */
   | boolean /** This is the old sandbox flag retained for backwards compatibility */;
 
@@ -22,20 +22,20 @@ export type ConnectOptions = {
   onSuccess: (e: SuccessEvent) => void;
   onError: (e: ErrorEvent) => void;
   onClose: () => void;
-  payrollProvider: string | null;
+  taxProvider: string | null;
   products: string[];
   sandbox: Sandbox;
   zIndex: number;
-  finchDevMode?: boolean;
+  chartDevMode?: boolean;
 };
 
 type OpenFn = (
-  overrides?: Partial<Pick<ConnectOptions, 'products' | 'state' | 'payrollProvider'>>
+  overrides?: Partial<Pick<ConnectOptions, 'products' | 'state' | 'taxProvider'>>
 ) => void;
 
-const POST_MESSAGE_NAME = 'finch-auth-message' as const;
+const POST_MESSAGE_NAME = 'chart-auth-message' as const;
 
-type FinchConnectAuthMessage = { name: typeof POST_MESSAGE_NAME } & (
+type ChartConnectAuthMessage = { name: typeof POST_MESSAGE_NAME } & (
   | {
       kind: 'closed';
     }
@@ -50,43 +50,43 @@ type FinchConnectAuthMessage = { name: typeof POST_MESSAGE_NAME } & (
     }
 );
 
-interface FinchConnectPostMessage {
-  data: FinchConnectAuthMessage;
+interface ChartConnectPostMessage {
+  data: ChartConnectAuthMessage;
   origin: string;
 }
 
-const BASE_FINCH_CONNECT_URI = 'https://connect.tryfinch.com';
-const DEFAULT_FINCH_REDIRECT_URI = 'https://tryfinch.com';
+const BASE_CHART_CONNECT_URI = 'https://connect.trychartapi.com';
+const DEFAULT_CHART_REDIRECT_URI = 'https://trychartapi.com';
 
-const DEV_FINCH_CONNECT_URI = 'http://localhost:3000';
-const DEV_DEFAULT_FINCH_REDIRECT_URI = 'http://localhost:4001';
+const DEV_CHART_CONNECT_URI = 'http://localhost:3000';
+const DEV_DEFAULT_CHART_REDIRECT_URI = 'http://localhost:4001';
 
-const FINCH_CONNECT_IFRAME_ID = 'finch-connect-iframe';
-const FINCH_AUTH_MESSAGE_NAME = 'finch-auth-message';
+const CHART_CONNECT_IFRAME_ID = 'chart-connect-iframe';
+const CHART_AUTH_MESSAGE_NAME = 'chart-auth-message';
 
 const constructAuthUrl = ({
   clientId,
-  payrollProvider,
+  taxProvider,
   category,
   products,
   manual,
   sandbox,
   state,
-  finchDevMode,
+  chartDevMode,
 }: Partial<ConnectOptions>) => {
-  const canUseFinchDevMode = finchDevMode && window.location.hostname === 'localhost';
+  const canUseChartDevMode = chartDevMode && window.location.hostname === 'localhost';
 
   const authUrl = new URL(
-    `${canUseFinchDevMode ? DEV_FINCH_CONNECT_URI : BASE_FINCH_CONNECT_URI}/authorize`
+    `${canUseChartDevMode ? DEV_CHART_CONNECT_URI : BASE_CHART_CONNECT_URI}/authorize`
   );
   if (clientId) authUrl.searchParams.append('client_id', clientId);
-  if (payrollProvider) authUrl.searchParams.append('payroll_provider', payrollProvider);
+  if (taxProvider) authUrl.searchParams.append('payroll_provider', taxProvider);
   if (category) authUrl.searchParams.append('category', category);
   authUrl.searchParams.append('products', (products ?? []).join(' '));
   authUrl.searchParams.append('app_type', 'spa');
   authUrl.searchParams.append(
     'redirect_uri',
-    canUseFinchDevMode ? DEV_DEFAULT_FINCH_REDIRECT_URI : DEFAULT_FINCH_REDIRECT_URI
+    canUseChartDevMode ? DEV_DEFAULT_CHART_REDIRECT_URI : DEFAULT_CHART_REDIRECT_URI
   );
   /** The host URL of the SDK. This is used to store the referrer for postMessage purposes */
   authUrl.searchParams.append('sdk_host_url', window.location.origin);
@@ -110,28 +110,28 @@ const DEFAULT_OPTIONS: Omit<ConnectOptions, 'clientId'> = {
   onSuccess: noop,
   onError: noop,
   onClose: noop,
-  payrollProvider: null,
+  taxProvider: null,
   products: [],
   sandbox: false,
   state: null,
   zIndex: 999,
-  finchDevMode: false,
+  chartDevMode: false,
 };
 
-let isUseFinchConnectInitialized = false;
+let isUseChartConnectInitialized = false;
 
-export const useFinchConnect = (options: Partial<ConnectOptions>): { open: OpenFn } => {
-  if (!options.clientId) throw new Error('must specify clientId in options for useFinchConnect');
+export const useChartConnect = (options: Partial<ConnectOptions>): { open: OpenFn } => {
+  if (!options.clientId) throw new Error('must specify clientId in options for useChartConnect');
   const isHookMounted = useRef(false);
 
   useEffect(() => {
     if (!isHookMounted.current) {
-      if (isUseFinchConnectInitialized) {
+      if (isUseChartConnectInitialized) {
         console.error(
-          'One useFinchConnect hook has already been registered. Please ensure to only call useFinchConnect once to avoid your event callbacks getting called more than once. You can pass in override options to the open function if you so require.'
+          'One useChartConnect hook has already been registered. Please ensure to only call useChartConnect once to avoid your event callbacks getting called more than once. You can pass in override options to the open function if you so require.'
         );
       } else {
-        isUseFinchConnectInitialized = true;
+        isUseChartConnectInitialized = true;
       }
 
       isHookMounted.current = true;
@@ -150,11 +150,11 @@ export const useFinchConnect = (options: Partial<ConnectOptions>): { open: OpenF
       ...overrides,
     };
 
-    if (!document.getElementById(FINCH_CONNECT_IFRAME_ID)) {
+    if (!document.getElementById(CHART_CONNECT_IFRAME_ID)) {
       const iframe = document.createElement('iframe');
       iframe.src = constructAuthUrl(openOptions);
       iframe.frameBorder = '0';
-      iframe.id = FINCH_CONNECT_IFRAME_ID;
+      iframe.id = CHART_CONNECT_IFRAME_ID;
       iframe.style.position = 'fixed';
       iframe.style.zIndex = openOptions.zIndex.toString();
       iframe.style.height = '100%';
@@ -168,7 +168,7 @@ export const useFinchConnect = (options: Partial<ConnectOptions>): { open: OpenF
   };
 
   const close = () => {
-    const frameToRemove = document.getElementById(FINCH_CONNECT_IFRAME_ID);
+    const frameToRemove = document.getElementById(CHART_CONNECT_IFRAME_ID);
     if (frameToRemove) {
       frameToRemove.parentNode?.removeChild(frameToRemove);
       document.body.style.overflow = 'inherit';
@@ -176,14 +176,14 @@ export const useFinchConnect = (options: Partial<ConnectOptions>): { open: OpenF
   };
 
   useEffect(() => {
-    function handleFinchAuth(event: FinchConnectPostMessage) {
-      const canUseFinchDevMode =
-        combinedOptions.finchDevMode && window.location.hostname === 'localhost';
+    function handleChartAuth(event: ChartConnectPostMessage) {
+      const canUseChartDevMode =
+        combinedOptions.chartDevMode && window.location.hostname === 'localhost';
 
-      const CONNECT_URI = canUseFinchDevMode ? DEV_FINCH_CONNECT_URI : BASE_FINCH_CONNECT_URI;
+      const CONNECT_URI = canUseChartDevMode ? DEV_CHART_CONNECT_URI : BASE_CHART_CONNECT_URI;
 
       if (!event.data) return;
-      if (event.data.name !== FINCH_AUTH_MESSAGE_NAME) return;
+      if (event.data.name !== CHART_AUTH_MESSAGE_NAME) return;
       if (!event.origin.startsWith(CONNECT_URI)) return;
 
       close();
@@ -204,7 +204,7 @@ export const useFinchConnect = (options: Partial<ConnectOptions>): { open: OpenF
         default: {
           // This case should never happen, if it does it should be reported to us
           combinedOptions.onError({
-            errorMessage: `Report to developers@tryfinch.com: unable to handle window.postMessage for:  ${JSON.stringify(
+            errorMessage: `Report to developers@trychartapi.com: unable to handle window.postMessage for:  ${JSON.stringify(
               event.data
             )}`,
           });
@@ -212,10 +212,10 @@ export const useFinchConnect = (options: Partial<ConnectOptions>): { open: OpenF
       }
     }
 
-    window.addEventListener('message', handleFinchAuth);
+    window.addEventListener('message', handleChartAuth);
     return () => {
-      window.removeEventListener('message', handleFinchAuth);
-      isUseFinchConnectInitialized = false;
+      window.removeEventListener('message', handleChartAuth);
+      isUseChartConnectInitialized = false;
     };
   }, [combinedOptions.onClose, combinedOptions.onError, combinedOptions.onSuccess]);
 

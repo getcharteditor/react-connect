@@ -1,11 +1,11 @@
 {
-  "name": "react-finch-connect-example",
-  "homepage": "https://.github.io/react-finch-connect",
+  "name": "react-chart-connect-example",
+  "homepage": "https://.github.io/react-chart-connect",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@tryfinch/react-connect": "file:..",
+    "@trychart/react-connect": "file:..",
     "@types/react": "^17.0.37",
     "prop-types": "^15.6.2",
     "react": "file:../node_modules/react",

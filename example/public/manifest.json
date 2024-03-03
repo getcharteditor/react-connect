@@ -1,6 +1,6 @@
 {
-  "short_name": "react-finch-connect",
-  "name": "react-finch-connect",
+  "short_name": "react-chart-connect",
+  "name": "react-chart-connect",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
