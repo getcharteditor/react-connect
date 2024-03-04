@@ -10,7 +10,7 @@
     "oauth"
   ],
   "homepage": "https://trychartapi.com/",
-  "author": "",
+  "author": "Chart Editor, Inc.",
   "license": "MIT",
   "repository": "getcharteditor/react-connect",
   "main": "dist/index.js",

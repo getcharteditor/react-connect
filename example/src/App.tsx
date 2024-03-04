@@ -14,11 +14,7 @@ const App = () => {
   const onClose = () => setResult({ kind: 'closed' });
 
   const { open } = useChartConnect({
-    clientId: '<your-client-id>',
-    products: ['company', 'directory', 'individual', 'employment'],
-    // For 'sandbox`, omit or use 'false' if in production. Use "chart" or "provider" for sandbox testing, depending on test plan. See Chart's [documentation](https://developer.trychartapi.com/implementation-guide/Test/Testing-Plan) for an overview of Chart and Provider sandboxes.
-    // sandbox: false,
-    // payrollProvider: '<payroll-provider-id>',
+    clientId: '4a1acca9c5b0891fe50c8511127058dd',
     onSuccess,
     onError,
     onClose,
