@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useChartConnect, SuccessEvent, ErrorEvent } from '@trychart/react-connect';
+import { useChartConnect, SuccessEvent, ErrorEvent } from '@chartapi/react-connect';
 
 import Result, { ResultContainer } from './Result';
 
@@ -14,7 +14,7 @@ const App = () => {
   const onClose = () => setResult({ kind: 'closed' });
 
   const { open } = useChartConnect({
-    clientId: '4a1acca9c5b0891fe50c8511127058dd',
+    clientId: process.env.REACT_APP_CHART_CLIENT_ID,
     onSuccess,
     onError,
     onClose,
@@ -29,7 +29,7 @@ const App = () => {
 
   return (
     <div className="container">
-      <h2><a href="https://www.npmjs.com/package/@trychart/react-connect">@trychart/react-connect</a> Example App</h2>
+      <h2><a href="https://www.npmjs.com/package/@chartapi/react-connect">@chartapi/react-connect</a> Example App</h2>
       <form className="actions" onSubmit={submissionHandler}>
         <div className="row">
           <label className="top-label">Include State:</label>

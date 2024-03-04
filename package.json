@@ -1,5 +1,5 @@
 {
-  "name": "chart-react-connect",
+  "name": "@chartapi/react-connect",
   "version": "1.0.0",
   "description": "Chart SDK for embedding Chart Connect in React Single Page Applications (SPA)",
   "keywords": [

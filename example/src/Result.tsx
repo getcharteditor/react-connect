@@ -1,4 +1,4 @@
-import { SuccessEvent, ErrorEvent } from '@trychart/react-connect';
+import { SuccessEvent, ErrorEvent } from '@chartapi/react-connect';
 
 export type ResultContainer = {
   kind: 'success';

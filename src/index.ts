@@ -9,28 +9,18 @@ export type ErrorEvent = {
   errorMessage: string;
 };
 
-export type Sandbox =
-  | 'chart' /** This is to enable the new Chart (simulated) Sandbox */
-  | 'provider' /** This is to enable the new Provider Sandbox */
-  | boolean /** This is the old sandbox flag retained for backwards compatibility */;
-
 export type ConnectOptions = {
-  category: string | null;
   clientId: string;
-  manual: boolean;
   state: string | null;
   onSuccess: (e: SuccessEvent) => void;
   onError: (e: ErrorEvent) => void;
   onClose: () => void;
-  taxProvider: string | null;
-  products: string[];
-  sandbox: Sandbox;
   zIndex: number;
   chartDevMode?: boolean;
 };
 
 type OpenFn = (
-  overrides?: Partial<Pick<ConnectOptions, 'products' | 'state' | 'taxProvider'>>
+  overrides?: Partial<Pick<ConnectOptions, 'state'>>
 ) => void;
 
 const POST_MESSAGE_NAME = 'chart-auth-message' as const;
@@ -66,11 +56,6 @@ const CHART_AUTH_MESSAGE_NAME = 'chart-auth-message';
 
 const constructAuthUrl = ({
   clientId,
-  taxProvider,
-  category,
-  products,
-  manual,
-  sandbox,
   state,
   chartDevMode,
 }: Partial<ConnectOptions>) => {
@@ -80,9 +65,6 @@ const constructAuthUrl = ({
     `${canUseChartDevMode ? DEV_CHART_CONNECT_URI : BASE_CHART_CONNECT_URI}`
   );
   if (clientId) authUrl.searchParams.append('client_id', clientId);
-  if (taxProvider) authUrl.searchParams.append('tax_provider', taxProvider);
-  if (category) authUrl.searchParams.append('category', category);
-  authUrl.searchParams.append('products', (products ?? []).join(' '));
   authUrl.searchParams.append('app_type', 'spa');
   authUrl.searchParams.append(
     'redirect_uri',
@@ -90,8 +72,6 @@ const constructAuthUrl = ({
   );
   /** The host URL of the SDK. This is used to store the referrer for postMessage purposes */
   authUrl.searchParams.append('sdk_host_url', window.location.origin);
-  if (manual) authUrl.searchParams.append('manual', String(manual));
-  if (sandbox) authUrl.searchParams.append('sandbox', String(sandbox));
   if (state) authUrl.searchParams.append('state', state);
   // replace with actual SDK version by rollup
   authUrl.searchParams.append('sdk_version', 'react-SDK_VERSION');
@@ -104,14 +84,9 @@ const noop = () => {
 };
 
 const DEFAULT_OPTIONS: Omit<ConnectOptions, 'clientId'> = {
-  category: null,
-  manual: false,
   onSuccess: noop,
   onError: noop,
   onClose: noop,
-  taxProvider: null,
-  products: [],
-  sandbox: false,
   state: null,
   zIndex: 999,
   chartDevMode: false,
