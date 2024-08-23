@@ -24,6 +24,7 @@ const App = () => {
   const { open } = useChartConnect({
     clientId: '<your-client-id>',
     // zIndex: 999,
+    // sandbox: true,
     onSuccess,
     onError,
     onClose,
