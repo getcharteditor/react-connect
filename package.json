@@ -1,6 +1,6 @@
 {
   "name": "@chartapi/react-connect",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Chart SDK for embedding Chart Connect in React Single Page Applications (SPA)",
   "keywords": [
     "chart",
@@ -9,7 +9,7 @@
     "react",
     "oauth"
   ],
-  "homepage": "https://trychartapi.com/",
+  "homepage": "https://trychart.com/",
   "author": "Chart Editor, Inc.",
   "license": "MIT",
   "repository": "getcharteditor/react-connect",

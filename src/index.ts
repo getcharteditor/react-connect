@@ -44,8 +44,8 @@ interface ChartConnectPostMessage {
   origin: string;
 }
 
-const BASE_CHART_CONNECT_URI = 'https://connect.trychartapi.com';
-const DEFAULT_CHART_REDIRECT_URI = 'https://trychartapi.com';
+const BASE_CHART_CONNECT_URI = 'https://connect.trychart.com';
+const DEFAULT_CHART_REDIRECT_URI = 'https://trychart.com';
 
 const DEV_CHART_CONNECT_URI = 'http://localhost:3000';
 const DEV_DEFAULT_CHART_REDIRECT_URI = 'http://localhost:4001';
@@ -173,7 +173,7 @@ export const useChartConnect = (options: Partial<ConnectOptions>): { open: OpenF
         default: {
           // This case should never happen, if it does it should be reported to us
           combinedOptions.onError({
-            errorMessage: `Report to developers@trychartapi.com: unable to handle window.postMessage for:  ${JSON.stringify(
+            errorMessage: `Report to developers@trychart.com: unable to handle window.postMessage for:  ${JSON.stringify(
               event.data
             )}`,
           });
