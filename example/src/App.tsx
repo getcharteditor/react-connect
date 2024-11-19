@@ -18,6 +18,11 @@ const App = () => {
     onSuccess,
     onError,
     onClose,
+    chartDevMode: true,
+    settings: {
+      companyName: 'Example Company!',
+      flowType: 'irs-online-account'
+    },
   });
 
   const submissionHandler: React.FormEventHandler<HTMLFormElement>  = (e) => {

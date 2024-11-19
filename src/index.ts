@@ -9,6 +9,14 @@ export type ErrorEvent = {
   errorMessage: string;
 };
 
+export type Settings = {
+  companyName?: string;
+  logo?: FileList;
+  logoUrl?: string;
+  flowType?: 'full' | 'personal' | 'business' | 'irs-8821' | 'irs-online-account' | 'full-irs-online-account';
+  accentColor?: string;
+};
+
 export type ConnectOptions = {
   clientId: string;
   state: string | null;
@@ -18,6 +26,7 @@ export type ConnectOptions = {
   zIndex: number;
   chartDevMode?: boolean;
   sandbox?: boolean;
+  settings?: Partial<Settings>;
 };
 
 type OpenFn = (overrides?: Partial<Pick<ConnectOptions, 'state'>>) => void;
@@ -53,7 +62,7 @@ const DEV_DEFAULT_CHART_REDIRECT_URI = 'http://localhost:4001';
 const CHART_CONNECT_IFRAME_ID = 'chart-connect-iframe';
 const CHART_AUTH_MESSAGE_NAME = 'chart-auth-message';
 
-const constructAuthUrl = ({ clientId, state, chartDevMode, sandbox }: Partial<ConnectOptions>) => {
+const constructAuthUrl = ({ clientId, state, chartDevMode, sandbox, settings }: Partial<ConnectOptions>) => {
   const canUseChartDevMode = chartDevMode && window.location.hostname === 'localhost';
 
   const authUrl = new URL(`${canUseChartDevMode ? DEV_CHART_CONNECT_URI : BASE_CHART_CONNECT_URI}`);
@@ -69,6 +78,7 @@ const constructAuthUrl = ({ clientId, state, chartDevMode, sandbox }: Partial<Co
   // replace with actual SDK version by rollup
   authUrl.searchParams.append('sdk_version', 'react-SDK_VERSION');
   if (sandbox) authUrl.searchParams.append('sandbox', 'true');
+  if (settings) authUrl.searchParams.append('settings', btoa(JSON.stringify(settings)));
 
   return authUrl.href;
 };
