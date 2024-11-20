@@ -20,8 +20,7 @@ const App = () => {
     onClose,
     chartDevMode: true,
     settings: {
-      companyName: 'Example Company!',
-      flowType: 'irs-online-account'
+      flowType: 'irs-8821'
     },
   });
 

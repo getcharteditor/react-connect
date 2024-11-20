@@ -10,11 +10,7 @@ export type ErrorEvent = {
 };
 
 export type Settings = {
-  companyName?: string;
-  logo?: FileList;
-  logoUrl?: string;
   flowType?: 'full' | 'personal' | 'business' | 'irs-8821' | 'irs-online-account' | 'full-irs-online-account';
-  accentColor?: string;
 };
 
 export type ConnectOptions = {
