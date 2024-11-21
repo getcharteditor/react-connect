@@ -19,9 +19,6 @@ const App = () => {
     onError,
     onClose,
     chartDevMode: true,
-    settings: {
-      flowType: 'irs-8821'
-    },
   });
 
   const submissionHandler: React.FormEventHandler<HTMLFormElement>  = (e) => {
