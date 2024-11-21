@@ -18,7 +18,6 @@ const App = () => {
     onSuccess,
     onError,
     onClose,
-    chartDevMode: true,
   });
 
   const submissionHandler: React.FormEventHandler<HTMLFormElement>  = (e) => {
