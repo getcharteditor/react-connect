@@ -25,6 +25,7 @@ const App = () => {
     clientId: '<your-client-id>',
     // zIndex: 999,
     // sandbox: true,
+    // sessionSettingsId: '<your-session-settings-id>', // optional; if provided, will override the default flow settings
     onSuccess,
     onError,
     onClose,
