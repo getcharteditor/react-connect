@@ -9,6 +9,16 @@ export type ErrorEvent = {
   errorMessage: string;
 };
 
+export type ChartFlowType =
+  | 'full'
+  | 'personal'
+  | 'business'
+  | 'irs-8821'
+  | 'irs-8821-personal'
+  | 'irs-8821-business'
+  | 'irs-online-account'
+  | 'full-irs-online-account';
+
 export type ConnectOptions = {
   clientId: string;
   state: string | null;
@@ -18,6 +28,7 @@ export type ConnectOptions = {
   zIndex: number;
   chartDevMode?: boolean;
   sessionSettingsId?: string;
+  flowType?: ChartFlowType;
 };
 
 type OpenFn = (overrides?: Partial<Pick<ConnectOptions, 'state'>>) => void;
@@ -53,7 +64,13 @@ const DEV_DEFAULT_CHART_REDIRECT_URI = 'http://localhost:4001';
 const CHART_CONNECT_IFRAME_ID = 'chart-connect-iframe';
 const CHART_AUTH_MESSAGE_NAME = 'chart-auth-message';
 
-const constructAuthUrl = ({ clientId, state, chartDevMode, sessionSettingsId }: Partial<ConnectOptions>) => {
+const constructAuthUrl = ({
+  clientId,
+  state,
+  chartDevMode,
+  sessionSettingsId,
+  flowType,
+}: Partial<ConnectOptions>) => {
   const canUseChartDevMode = chartDevMode && window.location.hostname === 'localhost';
 
   const authUrl = new URL(`${canUseChartDevMode ? DEV_CHART_CONNECT_URI : BASE_CHART_CONNECT_URI}`);
@@ -69,6 +86,7 @@ const constructAuthUrl = ({ clientId, state, chartDevMode, sessionSettingsId }: 
   // replace with actual SDK version by rollup
   authUrl.searchParams.append('sdk_version', 'react-SDK_VERSION');
   if (sessionSettingsId) authUrl.searchParams.append('session_settings_id', sessionSettingsId);
+  if (flowType) authUrl.searchParams.append('flow', flowType);
 
   return authUrl.href;
 };
