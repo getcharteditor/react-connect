@@ -24,7 +24,9 @@ const App = () => {
   const { open } = useChartConnect({
     clientId: '<your-client-id>',
     // zIndex: 999,
-    // sessionSettingsId: '<your-session-settings-id>', // optional; if provided, will override the default flow settings
+    // sessionSettingsId: '<your-session-settings-id>', // optional; if provided, will prefill information in the form
+    // flow: 'irs-8821', // optional; if provided, will set the flow to the specified flow override the master settings
+
     onSuccess,
     onError,
     onClose,
