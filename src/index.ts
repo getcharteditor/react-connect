@@ -9,6 +9,16 @@ export type ErrorEvent = {
   errorMessage: string;
 };
 
+export type ChartFlowType =
+  | 'full'
+  | 'personal'
+  | 'business'
+  | 'irs-8821'
+  | 'irs-8821-personal'
+  | 'irs-8821-business'
+  | 'irs-online-account'
+  | 'full-irs-online-account';
+
 export type ConnectOptions = {
   clientId: string;
   state: string | null;
@@ -18,13 +28,7 @@ export type ConnectOptions = {
   zIndex: number;
   chartDevMode?: boolean;
   sessionSettingsId?: string;
-  flow?:
-    | 'full'
-    | 'personal'
-    | 'business'
-    | 'irs-8821'
-    | 'irs-online-account'
-    | 'full-irs-online-account';
+  flow?: ChartFlowType;
 };
 
 type OpenFn = (overrides?: Partial<Pick<ConnectOptions, 'state'>>) => void;
