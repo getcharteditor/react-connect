@@ -28,7 +28,7 @@ export type ConnectOptions = {
   zIndex: number;
   chartDevMode?: boolean;
   sessionSettingsId?: string;
-  flowType?: ChartFlowType;
+  flow?: ChartFlowType;
 };
 
 type OpenFn = (overrides?: Partial<Pick<ConnectOptions, 'state'>>) => void;
@@ -69,7 +69,7 @@ const constructAuthUrl = ({
   state,
   chartDevMode,
   sessionSettingsId,
-  flowType,
+  flow,
 }: Partial<ConnectOptions>) => {
   const canUseChartDevMode = chartDevMode && window.location.hostname === 'localhost';
 
@@ -86,8 +86,7 @@ const constructAuthUrl = ({
   // replace with actual SDK version by rollup
   authUrl.searchParams.append('sdk_version', 'react-SDK_VERSION');
   if (sessionSettingsId) authUrl.searchParams.append('session_settings_id', sessionSettingsId);
-  if (flowType) authUrl.searchParams.append('flow', flowType);
-
+  if (flow) authUrl.searchParams.append('flow', flow);
   return authUrl.href;
 };
 
