@@ -23,6 +23,8 @@ export type ConnectOptions = {
     | 'personal'
     | 'business'
     | 'irs-8821'
+    | 'irs-8821-personal'
+    | 'irs-8821-business'
     | 'irs-online-account'
     | 'full-irs-online-account';
 };
