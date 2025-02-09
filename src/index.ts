@@ -161,6 +161,7 @@ export const useChartConnect = (options: Partial<ConnectOptions>): { open: OpenF
 
   useEffect(() => {
     function handleChartAuth(event: ChartConnectPostMessage) {
+      console.log('handleChartAuth', event);
       const canUseChartDevMode =
         combinedOptions.chartDevMode && window.location.hostname === 'localhost';
 
@@ -174,12 +175,15 @@ export const useChartConnect = (options: Partial<ConnectOptions>): { open: OpenF
 
       switch (event.data.kind) {
         case 'closed':
+          console.log('chart-react closed');
           combinedOptions.onClose();
           break;
         case 'error':
+          console.log('chart-react error');
           combinedOptions.onError({ errorMessage: event.data.error });
           break;
         case 'success':
+          console.log('chart-react success');
           combinedOptions.onSuccess({
             code: event.data.code,
             state: event.data.state,
@@ -187,6 +191,7 @@ export const useChartConnect = (options: Partial<ConnectOptions>): { open: OpenF
           break;
         default: {
           // This case should never happen, if it does it should be reported to us
+          console.log('chart-react default');
           combinedOptions.onError({
             errorMessage: `Report to developers@trychart.com: unable to handle window.postMessage for:  ${JSON.stringify(
               event.data
