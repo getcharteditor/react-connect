@@ -1,6 +1,6 @@
 {
   "name": "@chartapi/react-connect",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Chart SDK for embedding Chart Connect in React Single Page Applications (SPA)",
   "keywords": [
     "chart",
