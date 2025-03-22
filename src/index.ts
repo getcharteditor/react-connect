@@ -20,6 +20,8 @@ export type ChartFlowType =
   | 'irs-online-account-business'
   | 'full-irs-online-account'
   | 'full-irs-online-account-business'
+  | 'irs-online-verify-first'
+  | 'irs-online-verify-first-business'
   | 'tax-prep';
 
 export type ConnectOptions = {
