@@ -25,7 +25,8 @@ export type ChartFlowType =
   | 'full-irs-online-account-business'
   | 'irs-online-verify-first'
   | 'irs-online-verify-first-business'
-  | 'tax-prep';
+  | 'tax-prep'
+  | 'all-countries';
 
 export type ChartProviderType = 'irs' | 'ssa' | 'uk' | 'cra' | 'au' | 'ph' | 'sg' | 'tr';
 
