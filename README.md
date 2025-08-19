@@ -26,6 +26,7 @@ const App = () => {
     // zIndex: 999,
     // sessionSettingsId: '<your-session-settings-id>', // optional; if provided, will prefill information in the form
     // flow: 'irs-8821', // optional; if provided, will set the flow to the specified flow override the master settings
+    // providers: ['irs', 'ssa'], // optional; if provided, will set the providers to the specified providers override the master settings
 
     onSuccess,
     onError,

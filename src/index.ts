@@ -27,6 +27,8 @@ export type ChartFlowType =
   | 'irs-online-verify-first-business'
   | 'tax-prep';
 
+export type ChartProviderType = 'irs' | 'ssa' | 'uk' | 'cra' | 'au' | 'ph' | 'sg' | 'tr';
+
 export type ConnectOptions = {
   clientId: string;
   state: string | null;
@@ -37,6 +39,7 @@ export type ConnectOptions = {
   chartDevMode?: boolean;
   sessionSettingsId?: string;
   flow?: ChartFlowType;
+  providers?: ChartProviderType[];
 };
 
 type OpenFn = (overrides?: Partial<Pick<ConnectOptions, 'state'>>) => void;
@@ -78,6 +81,7 @@ const constructAuthUrl = ({
   chartDevMode,
   sessionSettingsId,
   flow,
+  providers,
 }: Partial<ConnectOptions>) => {
   const canUseChartDevMode = chartDevMode && window.location.hostname === 'localhost';
 
@@ -95,6 +99,7 @@ const constructAuthUrl = ({
   authUrl.searchParams.append('sdk_version', 'react-SDK_VERSION');
   if (sessionSettingsId) authUrl.searchParams.append('session_settings_id', sessionSettingsId);
   if (flow) authUrl.searchParams.append('flow', flow);
+  if (providers) authUrl.searchParams.append('providers', providers.join(','));
   return authUrl.href;
 };
 
