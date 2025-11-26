@@ -33,6 +33,7 @@ export type ChartProviderType = 'irs' | 'ssa' | 'uk' | 'cra' | 'au' | 'ph' | 'sg
 export type ConnectOptions = {
   clientId: string;
   state: string | null;
+  metadata?: Record<string, unknown> | null;
   onSuccess: (e: SuccessEvent) => void;
   onError: (e: ErrorEvent) => void;
   onClose: () => void;
@@ -79,6 +80,7 @@ const CHART_AUTH_MESSAGE_NAME = 'chart-auth-message';
 const constructAuthUrl = ({
   clientId,
   state,
+  metadata,
   chartDevMode,
   sessionSettingsId,
   flow,
@@ -96,6 +98,15 @@ const constructAuthUrl = ({
   /** The host URL of the SDK. This is used to store the referrer for postMessage purposes */
   authUrl.searchParams.append('sdk_host_url', window.location.origin);
   if (state) authUrl.searchParams.append('state', state);
+  if (metadata) {
+    try {
+      const metadataString = JSON.stringify(metadata);
+      console.debug('[Chart Connect] Serializing metadata:', metadata, '→', metadataString);
+      authUrl.searchParams.append('metadata', metadataString);
+    } catch (error) {
+      console.error('[Chart Connect] Failed to serialize metadata:', error);
+    }
+  }
   // replace with actual SDK version by rollup
   authUrl.searchParams.append('sdk_version', 'react-SDK_VERSION');
   if (sessionSettingsId) authUrl.searchParams.append('session_settings_id', sessionSettingsId);
@@ -113,6 +124,7 @@ const DEFAULT_OPTIONS: Omit<ConnectOptions, 'clientId'> = {
   onError: noop,
   onClose: noop,
   state: null,
+  metadata: null,
   zIndex: 999,
   chartDevMode: false,
 };
