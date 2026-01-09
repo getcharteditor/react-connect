@@ -42,6 +42,7 @@ export type ConnectOptions = {
   sessionSettingsId?: string;
   flow?: ChartFlowType;
   providers?: ChartProviderType[];
+  overlay?: string;
 };
 
 type OpenFn = (overrides?: Partial<Pick<ConnectOptions, 'state'>>) => void;
@@ -85,6 +86,7 @@ const constructAuthUrl = ({
   sessionSettingsId,
   flow,
   providers,
+  overlay,
 }: Partial<ConnectOptions>) => {
   const canUseChartDevMode = chartDevMode && window.location.hostname === 'localhost';
 
@@ -112,6 +114,7 @@ const constructAuthUrl = ({
   if (sessionSettingsId) authUrl.searchParams.append('session_settings_id', sessionSettingsId);
   if (flow) authUrl.searchParams.append('flow', flow);
   if (providers) authUrl.searchParams.append('providers', providers.join(','));
+  if (overlay) authUrl.searchParams.append('overlay', overlay);
   return authUrl.href;
 };
 

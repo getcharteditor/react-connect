@@ -26,7 +26,8 @@ const App = () => {
     // zIndex: 999,
     // sessionSettingsId: '<your-session-settings-id>', // optional; if provided, will prefill information in the form
     // flow: 'irs-8821', // optional; if provided, will set the flow to the specified flow override the master settings
-    // providers: ['irs', 'ssa'], // optional; if provided, will set the providers to the specified providers override the master settings
+    // providers: ['irs', 'ssa'], // optional; if provided, will set the providers to the specified providers override the master 
+    // overlay: `rgba(199,201,199,0.5)` // optional; if provided, will set the overlay to the specified overlay CSS attribute
     // metadata: { userId: '123', source: 'web' }, // optional; any JSON object that will be passed as a stringified query parameter
 
     onSuccess,
