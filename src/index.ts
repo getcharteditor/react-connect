@@ -174,8 +174,9 @@ export const useChartConnect = (options: Partial<ConnectOptions>): { open: OpenF
       iframe.style.height = '100%';
       iframe.style.width = '100%';
       iframe.style.top = '0';
-      iframe.style.backgroundColor = 'none transparent';
+      iframe.style.backgroundColor = 'transparent';
       iframe.style.border = 'none';
+      iframe.setAttribute('allowtransparency', 'true');
       iframe.allow = 'camera';
       document.body.prepend(iframe);
       document.body.style.overflow = 'hidden';
