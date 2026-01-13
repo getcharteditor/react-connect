@@ -28,7 +28,28 @@ export type ChartFlowType =
   | 'tax-prep'
   | 'all-countries';
 
-export type ChartProviderType = 'irs' | 'ssa' | 'uk' | 'cra' | 'au' | 'ph' | 'sg' | 'tr';
+export type ChartProviderType = 
+  | 'turbotax'
+  | 'hr'
+  | 'irs'
+  | 'taxact'
+  | 'irs_tax_pro'
+  | 'irs_business'
+  | 'ssa'
+  | 'proconnect'
+  | 'chart-sandbox'
+  | 'tax_slayer'
+  | 'jackson'
+  | 'free_tax_usa'
+  | 'state_ca'
+  | 'tr'
+  | 'uk'
+  | 'hmrc'
+  | 'cra'
+  | 'au'
+  | 'ph'
+  | 'sg'
+  | 'rippling';
 
 export type ConnectOptions = {
   clientId: string;
